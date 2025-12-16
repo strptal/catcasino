@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Slot Machine</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  </head>
+  <body>
+    <script src="slots.js"></script>
+    <script>
+      // play once on first user interaction to satisfy browser autoplay rules
+      function startLobbyMusic() {
+        const m = document.getElementById('lobbyMusic');
+        const btn = document.getElementById('musicToggle');
+        if (!m) return;
+        m.volume = 0.6;
+        m.play().then(() => {
+          console.log('lobbyMusic playing');
+          if (btn) btn.textContent = 'Pause Music';
+        }).catch((err) => {
+          console.warn('lobbyMusic failed to play:', err);
+        });
+        document.removeEventListener('click', startLobbyMusic);
+        document.removeEventListener('touchstart', startLobbyMusic);
+      }
+      document.addEventListener('click', startLobbyMusic, { once: true });
+      document.addEventListener('touchstart', startLobbyMusic, { once: true });
+      function toggleLobbyMusic() {
+        const m = document.getElementById('lobbyMusic');
+        const btn = document.getElementById('musicToggle');
+        if (!m) return;
+        if (m.paused) {
+          m.play().then(() => { if (btn) btn.textContent = 'Pause Music'; })
+            .catch(err => console.warn('play failed', err));
+        } else {
+          m.pause();
+          if (btn) btn.textContent = 'Play Music';
+        }
+      }
+    </script>
+    <button id="musicToggle" onclick="toggleLobbyMusic()" style="display:inline-block;position:fixed;right:12px;top:12px;">Play Music</button>
+    <audio id="lobbyMusic" src="assets/lobby.mp3" loop preload="auto"></audio>
+  </body>
+</html>

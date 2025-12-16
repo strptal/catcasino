@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome to the Casino</title>
+    <style>
+      body {
+        margin: 0;
+        background: #141414;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: monospace;
+        color: white;
+      }
+      .container {
+        text-align: center;
+      }
+      .logo {
+        max-width: 650px;
+        display: block;
+        margin: 150px auto -40px auto;
+      }
+      .play-button {
+        max-width: 300px;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+        transition: transform 0.2s ease;
+      }
+      .play-button:hover {
+        transform: scale(1.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Your logo -->
+      <img src="assets/logo.png" alt="Casino Logo" class="logo" />
+
+      <!-- Clickable play button that goes to the lobby -->
+      <a href="index.html">
+        <img src="assets/play_icon.png" alt="Play" class="play-button" />
+      </a>
+    </div>
+  </body>
+</html>
