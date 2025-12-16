@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Casino Lobby</title>
+    <!-- This loads the p5.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- This will run your lobby code -->
+    <script src="sketch.js"></script>
+    <script>
+      // play once on first user interaction to satisfy browser autoplay rules
+      function startLobbyMusic() {
+        const m = document.getElementById('lobbyMusic');
+        const btn = document.getElementById('musicToggle');
+        if (!m) return;
+        m.volume = 0.6; // adjust volume 0.0 - 1.0
+        m.play().then(() => {
+          console.log('lobbyMusic playing');
+          if (btn) btn.textContent = 'Pause Music';
+        }).catch((err) => {
+          console.warn('lobbyMusic failed to play:', err);
+        });
+        // remove the auto-start listeners after first gesture
+        document.removeEventListener('click', startLobbyMusic);
+        document.removeEventListener('touchstart', startLobbyMusic);
+      }
+
+      // listen for both click and touchstart so mobile taps work
+      document.addEventListener('click', startLobbyMusic, { once: true });
+      document.addEventListener('touchstart', startLobbyMusic, { once: true });
+
+      // helper to toggle playback from UI
+      function toggleLobbyMusic() {
+        const m = document.getElementById('lobbyMusic');
+        const btn = document.getElementById('musicToggle');
+        if (!m) return;
+        if (m.paused) {
+          m.play().then(() => { if (btn) btn.textContent = 'Pause Music'; })
+            .catch(err => console.warn('play failed', err));
+        } else {
+          m.pause();
+          if (btn) btn.textContent = 'Play Music';
+        }
+      }
+    </script>
+    <button id="musicToggle" onclick="toggleLobbyMusic()" style="display:inline-block;position:fixed;right:12px;top:12px;">Play Music</button>
+    <audio id="lobbyMusic" src="assets/lobby.mp3" loop preload="auto"></audio>
+  </body>
+</html>
 
